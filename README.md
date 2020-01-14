@@ -1,5 +1,4 @@
 # How to use APIs
----
 ### ```/devs/presensi.json```
 ---
 Method: **GET**
