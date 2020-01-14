@@ -20,6 +20,7 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('login');
+		$data['app_name'] = $this->config->item('app_name');
+		$this->load->view('login', $data);
 	}
 }
