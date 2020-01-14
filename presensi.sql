@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 14, 2020 at 07:32 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 14 Jan 2020 pada 20.10
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,17 +25,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `devices`
+-- Struktur dari tabel `devices`
 --
 
 CREATE TABLE `devices` (
   `id` varchar(20) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `devices`
+-- Dumping data untuk tabel `devices`
 --
 
 INSERT INTO `devices` (`id`, `name`, `timestamp`) VALUES
@@ -44,31 +44,47 @@ INSERT INTO `devices` (`id`, `name`, `timestamp`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dosen`
+-- Struktur dari tabel `dosen`
 --
 
 CREATE TABLE `dosen` (
   `nidn` varchar(20) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `password` text DEFAULT NULL
+  `password` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `dosen`
+--
+
+INSERT INTO `dosen` (`nidn`, `nama`, `password`) VALUES
+('010203040', 'Elly Marcopolo', 'MTIzNDU2'),
+('0123456789', 'Bambang Pamungkas', 'MTIzNDU2');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `logs`
+-- Struktur dari tabel `logs`
 --
 
 CREATE TABLE `logs` (
   `card_id` varchar(100) NOT NULL,
   `nim` varchar(10) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `logs`
+--
+
+INSERT INTO `logs` (`card_id`, `nim`, `timestamp`) VALUES
+('121 229 158 132', '18.11.0123', '2020-01-14 15:39:29'),
+('121 229 158 132', '18.11.0123', '2020-01-14 16:20:10');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mahasiswa`
+-- Struktur dari tabel `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -78,7 +94,7 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mahasiswa`
+-- Dumping data untuk tabel `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `card_id`) VALUES
@@ -88,16 +104,16 @@ INSERT INTO `mahasiswa` (`nim`, `nama`, `card_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rf_cards`
+-- Struktur dari tabel `rf_cards`
 --
 
 CREATE TABLE `rf_cards` (
   `card_id` varchar(100) NOT NULL,
-  `card_added` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `card_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `rf_cards`
+-- Dumping data untuk tabel `rf_cards`
 --
 
 INSERT INTO `rf_cards` (`card_id`, `card_added`) VALUES
@@ -108,43 +124,43 @@ INSERT INTO `rf_cards` (`card_id`, `card_added`) VALUES
 --
 
 --
--- Indexes for table `devices`
+-- Indeks untuk tabel `devices`
 --
 ALTER TABLE `devices`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `dosen`
+-- Indeks untuk tabel `dosen`
 --
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`nidn`);
 
 --
--- Indexes for table `logs`
+-- Indeks untuk tabel `logs`
 --
 ALTER TABLE `logs`
   ADD KEY `card_id` (`card_id`),
   ADD KEY `nim` (`nim`);
 
 --
--- Indexes for table `mahasiswa`
+-- Indeks untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`nim`),
   ADD UNIQUE KEY `card_id` (`card_id`);
 
 --
--- Indexes for table `rf_cards`
+-- Indeks untuk tabel `rf_cards`
 --
 ALTER TABLE `rf_cards`
   ADD PRIMARY KEY (`card_id`);
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `logs`
+-- Ketidakleluasaan untuk tabel `logs`
 --
 ALTER TABLE `logs`
   ADD CONSTRAINT `cs_im` FOREIGN KEY (`card_id`) REFERENCES `mahasiswa` (`card_id`);
