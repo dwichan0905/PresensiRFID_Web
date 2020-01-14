@@ -49,10 +49,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'coreui';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+// APIs
 $route['devs'] = 'api/json';
 $route['devs/presensi.json'] = 'api/json/presensi';
 $route['devs/tambah_kartu.json'] = 'api/json/add_card';
+
+// Pages
+$route['logout.me'] = 'coreui/logout';
+$route['dosen.me'] = 'coreui/dosen';
+$route['mahasiswa.me'] = 'coreui/mahasiswa';
+
+$route['activity/today.me'] = 'coreui/today';
+$route['activity/all.me'] = 'coreui/all';
+
+$route['devices.me'] = 'coreui/devices';
+
