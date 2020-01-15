@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jan 2020 pada 20.10
+-- Waktu pembuatan: 15 Jan 2020 pada 19.41
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.3.0
 
@@ -58,7 +58,6 @@ CREATE TABLE `dosen` (
 --
 
 INSERT INTO `dosen` (`nidn`, `nama`, `password`) VALUES
-('010203040', 'Elly Marcopolo', 'MTIzNDU2'),
 ('0123456789', 'Bambang Pamungkas', 'MTIzNDU2');
 
 -- --------------------------------------------------------
@@ -72,14 +71,6 @@ CREATE TABLE `logs` (
   `nim` varchar(10) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `logs`
---
-
-INSERT INTO `logs` (`card_id`, `nim`, `timestamp`) VALUES
-('121 229 158 132', '18.11.0123', '2020-01-14 15:39:29'),
-('121 229 158 132', '18.11.0123', '2020-01-14 16:20:10');
 
 -- --------------------------------------------------------
 
@@ -111,13 +102,6 @@ CREATE TABLE `rf_cards` (
   `card_id` varchar(100) NOT NULL,
   `card_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `rf_cards`
---
-
-INSERT INTO `rf_cards` (`card_id`, `card_added`) VALUES
-('123 456 7 89', '2020-01-14 06:28:08');
 
 --
 -- Indexes for dumped tables
@@ -163,7 +147,7 @@ ALTER TABLE `rf_cards`
 -- Ketidakleluasaan untuk tabel `logs`
 --
 ALTER TABLE `logs`
-  ADD CONSTRAINT `cs_im` FOREIGN KEY (`card_id`) REFERENCES `mahasiswa` (`card_id`);
+  ADD CONSTRAINT `cs_im` FOREIGN KEY (`card_id`) REFERENCES `mahasiswa` (`card_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
