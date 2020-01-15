@@ -11,3 +11,5 @@
 
 <!-- dataTables JavaScript -->
 <script src="<?= base_url('assets/admin'); ?>/js/plugins/dataTables.js"></script>
+
+<script src="<?= base_url('assets/admin'); ?>/js/fun.js"></script>

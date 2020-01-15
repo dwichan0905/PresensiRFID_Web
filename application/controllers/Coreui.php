@@ -18,7 +18,7 @@ class Coreui extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -102,11 +102,9 @@ class Coreui extends CI_Controller {
 		if ($this->session->userdata('username')) {
 			$data['app_name'] = $this->config->item('app_name');
 			$data['username'] = $this->session->userdata('username');
-			$data['list_mhs'] = $this->db->select('b.nim, b.nama, b.card_id, COUNT(a.nim) AS cnt')
-												->from('logs a')
-												->join('mahasiswa b', 'a.nim = b.nim', 'right')
-												->group_by('a.nim')
-												->order_by('b.nim', 'asc')->get()->result();
+			$data['list_mhs'] = $this->db->select('a.nim, a.nama, a.card_id, (SELECT COUNT(*) FROM logs b WHERE b.card_id = a.card_id) AS cnt')
+												->from('mahasiswa a')
+												->order_by('a.nim', 'asc')->get()->result();
 
 			$this->load->view('mhs', $data);
 		} else {
@@ -165,6 +163,13 @@ class Coreui extends CI_Controller {
 		}
 	}
 
+	public function rfcards()
+	{
+		$data['app_name'] = $this->config->item('app_name');
+		$data['list_cards'] = $this->db->select('*')->from('rf_cards')->order_by('card_added', 'desc')->get()->result();
+		$this->load->view('rfcards', $data);
+	}
+
 	public function devices()
 	{
 		$data['page'] = 'dev';
@@ -176,6 +181,207 @@ class Coreui extends CI_Controller {
 												->get()->result();
 
 			$this->load->view('devices', $data);
+		} else {
+			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function tambah_dosen()
+	{
+		$data['page'] = 'dosen';
+		$postdata = $this->input->post('simpan');
+		
+		if ($this->session->userdata('username')) {
+			if (!$postdata) {
+				$data['app_name'] = $this->config->item('app_name');
+				$data['username'] = $this->session->userdata('username');
+				$data['error'] = true;
+				$data['errorOn'] = "all"; // id, nama, pw, all
+				$data['errorText'] = "Kurang duit 😗";
+
+				$this->load->view('tambah_dosen', $data);
+			} else {
+
+			}
+		} else {
+			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function tambah_mhs()
+	{
+		$data['page'] = 'mhs';
+		$postdata = $this->input->post('simpan');
+		
+		if ($this->session->userdata('username')) {
+			if (!$postdata) {
+				$data['app_name'] = $this->config->item('app_name');
+				$data['username'] = $this->session->userdata('username');
+				$data['error'] = false;
+				$data['errorOn'] = ""; // nim, nama, card, all
+				$data['errorText'] = "";
+
+				$this->load->view('tambah_mahasiswa', $data);
+			} else {
+				$nim = $this->input->post('nim');
+				$nama = $this->input->post('nama');
+				$card_id = $this->input->post('card_id');
+				
+				if (($nim == null) && ($nama == null) && ($card_id == null)) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "all"; // nim, nama, card, all
+					$data['errorText'] = "Semua kolom wajib diisi!";
+					$this->load->view('tambah_mahasiswa', $data);
+				} else {
+					if ($nim == null) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "nim"; // nim, nama, card, all
+						$data['errorText'] = "Kolom NIM wajib diisi!";
+						//$data['nim'] = $nim;
+						$data['nama'] = $nama;
+						$data['card'] = $card_id;
+						$this->load->view('tambah_mahasiswa', $data);
+					} else if ($nama == null) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "nama"; // nim, nama, card, all
+						$data['errorText'] = "Kolom Nama Mahasiswa wajib diisi!";
+						$data['nim'] = $nim;
+						//$data['nama'] = $nama;
+						$data['card'] = $card_id;
+						$this->load->view('tambah_mahasiswa', $data);
+					} else if ($card_id == null) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "card"; // nim, nama, card, all
+						$data['errorText'] = "Kolom Card ID wajib diisi!";
+						$data['nim'] = $nim;
+						$data['nama'] = $nama;
+						//$data['card'] = $card_id;
+						$this->load->view('tambah_mahasiswa', $data);
+					} else {
+						$num_id2 = $this->db->select('*')->from('mahasiswa')->where('card_id', $card_id)->get();
+						if ($num_id2->num_rows() == 0) {
+							$num_id = $this->db->select('card_id')->from('rf_cards')->where('card_id', $card_id)->get()->num_rows();
+							if ($num_id > 0) {
+								$this->db->insert('mahasiswa', array(
+									'nim' => $nim,
+									'nama' => $nama,
+									'card_id' => $card_id
+								));
+								
+								$this->db->delete('rf_cards', array('card_id' => $card_id));
+								
+								$this->session->set_tempdata('messages', "Berhasil menambahkan mahasiswa baru: " . $nama . "!", 5);
+							
+								redirect(base_url() . 'mahasiswa.me','refresh');
+							} else {
+								$data['app_name'] = $this->config->item('app_name');
+								$data['username'] = $this->session->userdata('username');
+								$data['error'] = true;
+								$data['errorOn'] = "card"; // nim, nama, card, all
+								$data['errorText'] = "Card ID belum terdaftar! Silakan daftarkan via perangkat yang sudah terdaftar!";
+								$data['nim'] = $nim;
+								$data['nama'] = $nama;
+								$data['card'] = $card_id;
+								$this->load->view('tambah_mahasiswa', $data);
+							}
+						} else {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "card"; // nim, nama, card, all
+							$data['errorText'] = "Card ID tersebut sudah didaftarkan dengan mahasiswa bernama " . $num_id2->row()->nama . " (" . $num_id2->row()->nim . ")!";
+							$data['nim'] = $nim;
+							$data['nama'] = $nama;
+							$data['card'] = $card_id;
+							$this->load->view('tambah_mahasiswa', $data);
+						}
+					}
+				}
+			}
+		} else {
+			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function tambah_perangkat()
+	{
+		$data['page'] = 'dev';
+		$postdata = $this->input->post('simpan');
+		
+		if ($this->session->userdata('username')) {
+			if (!$postdata) {
+				$data['app_name'] = $this->config->item('app_name');
+				$data['username'] = $this->session->userdata('username');
+				$data['error'] = false;
+				$data['errorOn'] = ""; // id, nama, all
+				$data['errorText'] = "";
+
+				$this->load->view('tambah_perangkat', $data);
+			} else {
+				$devid = $this->input->post('id');
+				$nama = $this->input->post('nama');
+				
+				if (($devid == null) && ($nama == null)) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "all"; // id, nama, all
+					$data['errorText'] = "Semua kolom harus diisi!";
+
+					$this->load->view('tambah_perangkat', $data);
+				} else {
+					if ($devid == null) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "id"; // id, nama, all
+						$data['errorText'] = "Kolom Device ID harus diisi!";
+						$data['nama'] = $nama;
+	
+						$this->load->view('tambah_perangkat', $data);
+					} else if ($nama == null) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "nama"; // id, nama, all
+						$data['errorText'] = "Kolom Nama Perangkat harus diisi!";
+						$data['id'] = $devid;
+	
+						$this->load->view('tambah_perangkat', $data);
+					} else {
+						$getq = $this->db->select('id, name')->from('devices')->where('id', $devid)->get();
+						if ($getq->num_rows() > 0) {
+							$heh = $getq->row();
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "id"; // id, nama, all
+							$data['errorText'] = "Perangkat tersebut sudah pernah didaftarkan dengan nama " . $heh->name;
+							$data['id'] = $devid;
+							$data['nama'] = $nama;
+		
+							$this->load->view('tambah_perangkat', $data);
+						} else {
+							$this->db->insert('devices', array(
+								'id' => $devid,
+								'name' => $nama
+							));
+							$this->session->set_tempdata('messages', "Berhasil menambahkan perangkat baru: " . $nama . "!", 5);
+							
+							redirect(base_url() . 'devices.me','refresh');
+							
+						}
+					}
+				}
+			}
 		} else {
 			redirect(base_url(),'refresh');
 		}

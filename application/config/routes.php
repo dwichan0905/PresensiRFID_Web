@@ -60,11 +60,17 @@ $route['devs/tambah_kartu.json'] = 'api/json/add_card';
 
 // Pages
 $route['logout.me'] = 'coreui/logout';
+
 $route['dosen.me'] = 'coreui/dosen';
+$route['dosen/add_new.me'] = 'coreui/tambah_dosen';
+
 $route['mahasiswa.me'] = 'coreui/mahasiswa';
+$route['mahasiswa/add_new.me'] = 'coreui/tambah_mhs';
+$route['mahasiswa/rfcards/get_rfcards.me'] = 'coreui/rfcards';
 
 $route['activity/today.me'] = 'coreui/today';
 $route['activity/all.me'] = 'coreui/all';
 
 $route['devices.me'] = 'coreui/devices';
+$route['devices/add_new.me'] = 'coreui/tambah_perangkat';
 

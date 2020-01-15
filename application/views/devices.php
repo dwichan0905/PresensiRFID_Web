@@ -36,10 +36,21 @@
                         </ol>
                     </div>
                 </div>
+
+                <?php if ($this->session->tempdata('messages')) {?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Informasi</strong><br /><?= $this->session->tempdata('messages'); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="" class="btn btn-success btn-md">Tambah Perangkat Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>devices/add_new.me'" class="btn btn-success btn-md">Tambah Perangkat Baru</button>
                     </div>
                 </div>
                 <br>
@@ -50,7 +61,7 @@
                                 <h3 class="panel-title"><i class="fa fa-hdd-o fa-fw"></i> Daftar Perangkat</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="table-responsive" style="overflow-x: hidden !important;">
+                                <div class="table-responsive">
                                     <table class="table table-hover table-striped dataTables">
                                         <thead>
                                             <tr>
@@ -68,7 +79,7 @@
                                                 <td><?= date("d/m/Y H:i:s", strtotime($u->timestamp)); ?></td>
                                                 <td>
                                                     <button type="button" class="btn btn-info btn-sm" onclick="">Edit</button>
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="">Delete</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" title="Hapus perangkat <?= $u->name ?>" onclick="deldev('<?= base_url() ?>','<?= $u->id ?>',`<?= $u->name ?>`)">Delete</button>
                                                 </td>
                                             </tr>
                                         <?php } ?>

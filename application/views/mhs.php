@@ -36,10 +36,22 @@
                         </ol>
                     </div>
                 </div>
+
+                <?php if ($this->session->tempdata('messages')) {?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Informasi</strong><br /><?= $this->session->tempdata('messages'); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="" class="btn btn-success btn-md">Tambah Mahasiswa Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>mahasiswa/add_new.me'" class="btn btn-success btn-md">Tambah Mahasiswa Baru</button>
                     </div>
                 </div>
                 <br>
@@ -50,7 +62,7 @@
                                 <h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Daftar Mahasiswa</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="table-responsive" style="overflow-x: hidden !important;">
+                                <div class="table-responsive">
                                     <table class="table table-hover table-striped dataTables">
                                         <thead>
                                             <tr>
@@ -70,7 +82,7 @@
                                                 <td><?= $u->cnt ?> kali</td>
                                                 <td>
                                                     <button type="button" class="btn btn-info btn-sm" onclick="">Edit</button>
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="">Delete</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" title="Hapus mahasiswa <?= $u->nama ?>" onclick="delmhs(`<?= base_url(); ?>`,'<?= $u->nim ?>',`<?= $u->nama ?>`)">Delete</button>
                                                 </td>
                                             </tr>
                                         <?php } ?>

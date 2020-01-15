@@ -39,7 +39,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="" class="btn btn-success btn-md">Tambah Dosen Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>dosen/add_new.me'" class="btn btn-success btn-md">Tambah Dosen Baru</button>
                     </div>
                 </div>
                 <br>
@@ -50,7 +50,7 @@
                                 <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> Daftar Dosen</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="table-responsive" style="overflow-x: hidden !important;">
+                                <div class="table-responsive">
                                     <table class="table table-hover table-striped dataTables">
                                         <thead>
                                             <tr>
@@ -66,7 +66,7 @@
                                                 <td><?= $u->nama ?></td>
                                                 <td>
                                                     <button type="button" class="btn btn-info btn-sm" onclick="">Edit</button>
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="">Delete</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" title="Hapus dosen <?= $u->nama ?>" onclick="deldsn('<?= base_url() ?>','<?= $u->nidn ?>','<?= $u->nama ?>');">Delete</button>
                                                 </td>
                                             </tr>
                                         <?php } ?>
