@@ -31,10 +31,10 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user"></i> Dosen
+                                <img src="<?= base_url()?>assets/resources/professor.png" /> Dosen
                             </li>
                             <li>
-                                <i class="fa fa-user"></i> Tambah Dosen Baru
+                                <img src="<?= base_url()?>assets/resources/professor.png" /> Tambah Dosen Baru
                             </li>
                         </ol>
                     </div>
@@ -51,26 +51,26 @@
                                 <!-- isi disini -->
                                 <?php if ($error == true) { ?><label class="control-label" style="color: red;">ERROR: <?= $errorText ?></label><br><?php } ?>
                                 <!-- isi disini -->
-                                <form>
+                                <form action="<?= base_url() ?>dosen/add_new.me" method="POST">
                                     <label class="control-label" for="inputError">NIDN/NIK:</label>
                                     <div class="form-group input-group <?= (($errorOn == 'id') || ($errorOn == 'all') ? "has-error" : ""); ?>">
                                         <span class="input-group-addon">ID</span>
-                                        <input type="text" class="form-control" id="inputError" placeholder="Masukkan NIDN/NIK disini..." value="<?= @$id; ?>">
+                                        <input type="text" name="nidn" class="form-control" id="inputError" placeholder="Masukkan NIDN/NIK disini..." value="<?= @$id; ?>">
                                     </div>
                                     <label class="control-label" for="inputError">Nama Dosen:</label>
                                     <div class="form-group input-group <?= (($errorOn == 'nama') || ($errorOn == 'all') ? "has-error" : ""); ?>">
                                         <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                        <input type="text" class="form-control" placeholder="Masukkan nama dosen disini..." value="<?= @$nama; ?>">
+                                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama dosen disini..." value="<?= @$nama; ?>">
                                     </div>
                                     <label class="control-label" for="inputError">Kata Sandi:</label>
                                     <div class="form-group input-group <?= (($errorOn == 'pw') || ($errorOn == 'all') ? "has-error" : ""); ?>">
                                         <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                        <input type="password" class="form-control" placeholder="Masukkan kata sandi disini...">
+                                        <input type="password" name="pw" class="form-control" placeholder="Masukkan kata sandi disini...">
                                     </div>
                                     <label class="control-label" for="inputError">Ulangi Kata Sandi:</label>
                                     <div class="form-group input-group <?= (($errorOn == 'pw') || ($errorOn == 'all') ? "has-error" : ""); ?>">
                                         <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                        <input type="password" class="form-control" placeholder="Masukkan ulang kata sandi disini...">
+                                        <input type="password" name="pw2" class="form-control" placeholder="Masukkan ulang kata sandi disini...">
                                     </div>
                                     <button type="submit" onclick="" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Simpan</button>
                                     <button type="reset" onclick="" class="btn btn-danger btn-md"><i class="fa fa-refresh fa-fw"></i> Reset</button>

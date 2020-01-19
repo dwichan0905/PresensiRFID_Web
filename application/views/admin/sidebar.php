@@ -5,13 +5,13 @@
                         <a href="<?= base_url(''); ?>"><i class="fa fa-fw fa-dashboard"></i> Beranda</a>
                     </li>
                     <li <?= ($page == 'dosen' ? "class=\"active\"" : "");?>>
-                        <a href="<?= base_url(''); ?>dosen.me"><i class="fa fa-fw fa-user"></i> Dosen</a>
+                        <a href="<?= base_url(''); ?>dosen.me"><img src="<?= base_url()?>assets/resources/professor.png" /> Dosen</a>
                     </li>
                     <li <?= ($page == 'mhs' ? "class=\"active\"" : "");?>>
                         <a href="<?= base_url(''); ?>mahasiswa.me"><i class="fa fa-fw fa-users"></i> Mahasiswa</a>
                     </li>
                     <li <?= (($page == 'today') || ($page == 'all') ? "class=\"active\"" : "");?>>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#act"><i class="fa fa-fw fa-file"></i> Aktivitas Presensi <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#act"><img src="<?= base_url()?>assets/resources/files-and-folders.png" /> Aktivitas Presensi <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="act" class="collapse">
                             <li>
                                 <a href="<?= base_url(''); ?>activity/today.me"><i class="fa fa-fw fa-calendar"></i> Hari Ini</a>

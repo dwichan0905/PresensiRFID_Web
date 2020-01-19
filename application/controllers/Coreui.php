@@ -195,13 +195,13 @@ class Coreui extends CI_Controller {
 			if (!$postdata) {
 				$data['app_name'] = $this->config->item('app_name');
 				$data['username'] = $this->session->userdata('username');
-				$data['error'] = true;
-				$data['errorOn'] = "all"; // id, nama, pw, all
-				$data['errorText'] = "Kurang duit 😗";
+				$data['error'] = false;
+				$data['errorOn'] = ""; // id, nama, pw, all
+				$data['errorText'] = "";
 
 				$this->load->view('tambah_dosen', $data);
 			} else {
-
+				
 			}
 		} else {
 			redirect(base_url(),'refresh');

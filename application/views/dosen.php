@@ -31,7 +31,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-user"></i> Dosen
+                                <img src="<?= base_url()?>assets/resources/professor.png" /> Dosen
                             </li>
                         </ol>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> Daftar Dosen</h3>
+                                <h3 class="panel-title"><img src="<?= base_url()?>assets/resources/professor.png" /> Daftar Dosen</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">

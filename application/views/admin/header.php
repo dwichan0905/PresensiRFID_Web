@@ -1,3 +1,4 @@
+<link rel="shortcut icon" type="image/jpg" href="<?= base_url('assets/resources'); ?>/wisudawan.jpg">
 <!-- Bootstrap Core CSS -->
 <link href="<?= base_url('assets/admin'); ?>/css/bootstrap.min.css" rel="stylesheet">
 

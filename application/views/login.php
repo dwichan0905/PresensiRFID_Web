@@ -18,9 +18,7 @@
 					  	<div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
 							<div class="card-body text-center">
 								<div>
-									<h2>Sign up</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<button class="btn btn-primary active mt-3" type="button">Register Now!</button>
+									<img class="img-responsive" src="<?=base_url()?>assets/resources/mahasiswa.png" height="300px"/>
 								</div>
 							</div>
 						</div>
@@ -29,6 +27,8 @@
 								<div class="card-body">
 									<h1>Masuk</h1>
 									<p class="text-muted">Masuk ke <?= $app_name ?></p>
+									<br />
+									<br />
 									<p><?= @$err ?></p>
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
