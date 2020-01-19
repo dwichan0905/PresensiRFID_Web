@@ -36,10 +36,22 @@
                         </ol>
                     </div>
                 </div>
+
+                <?php if ($this->session->tempdata('messages')) {?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Informasi</strong><br /><?= $this->session->tempdata('messages'); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="location.href = '<?= base_url('') ?>dosen/add_new.me'" class="btn btn-success btn-md">Tambah Dosen Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>dosen/add_new.me'" class="btn btn-default btn-md"><img src="<?= base_url()?>assets/resources/plus.png" height="15"/> Tambah Dosen Baru</button>
                     </div>
                 </div>
                 <br>
@@ -65,8 +77,8 @@
                                                 <td><?= $u->nidn ?></td>
                                                 <td><?= $u->nama ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-info btn-sm" onclick="">Edit</button>
-                                                    <button type="button" class="btn btn-danger btn-sm" title="Hapus dosen <?= $u->nama ?>" onclick="deldsn('<?= base_url() ?>','<?= $u->nidn ?>','<?= $u->nama ?>');">Delete</button>
+                                                    <button type="button" class="btn" title="Ubah mahasiswa <?= $u->nama ?>" onclick=""><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></button>
+                                                    <button type="button" class="btn" title="Hapus mahasiswa <?= $u->nama ?>" onclick="deldsn(`<?= base_url(); ?>`,'<?= $u->nidn ?>',`<?= $u->nama ?>`)"><img src="<?= base_url()?>assets/resources/delete.png" height="30"/></button>
                                                 </td>
                                             </tr>
                                         <?php } ?>

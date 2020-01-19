@@ -201,7 +201,57 @@ class Coreui extends CI_Controller {
 
 				$this->load->view('tambah_dosen', $data);
 			} else {
+				$nidn = $this->input->post('nidn');
+				$nama = $this->input->post('nama');
+				$pass1 = $this->input->post('pw');
+				$pass2 = $this->input->post('pw2');
 				
+				if (($nidn == null) || ($nama == null) || ($pass1 == null) || ($pass2 == null)) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "all"; // id, nama, pw, all
+					$data['errorText'] = "Tidak boleh ada satupun kolom yang kosong!";
+					$data['id'] = $nidn;
+					$data['nama'] = $nama;
+
+					$this->load->view('tambah_dosen', $data);
+				} else {
+					$getd = $this->db->select('*')->from("dosen")->where("nidn", $nidn)->get();
+					$num = $getd->num_rows();
+					if ($num > 0) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "id"; // id, nama, pw, all
+						$data['errorText'] = "NIDN/NIK tersebut telah terdaftar sebelumnya dengan nama " . $getd->row()->nama;
+						$data['id'] = $nidn;
+						$data['nama'] = $nama;
+
+						$this->load->view('tambah_dosen', $data);
+					} else {
+						if ($pass1 != $pass2) {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "pw"; // id, nama, pw, all
+							$data['errorText'] = "Kata Sandi tidak sama!";
+							$data['id'] = $nidn;
+							$data['nama'] = $nama;
+
+							$this->load->view('tambah_dosen', $data);
+						} else {
+							$this->db->insert('dosen', array(
+								'nidn' => $nidn,
+								'nama' => $nama,
+								'password' => base64_encode($pass1)
+							));
+							$this->session->set_tempdata('messages', "Berhasil menambahkan dosen baru: " . $nama . "!", 5);
+							
+							redirect(base_url() . 'dosen.me','refresh');
+						}
+					}
+				}
 			}
 		} else {
 			redirect(base_url(),'refresh');

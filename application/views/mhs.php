@@ -51,7 +51,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="location.href = '<?= base_url('') ?>mahasiswa/add_new.me'" class="btn btn-success btn-md">Tambah Mahasiswa Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>mahasiswa/add_new.me'" class="btn btn-default btn-md"><img src="<?= base_url()?>assets/resources/plus.png" height="15"/> Tambah Mahasiswa Baru</button>
                     </div>
                 </div>
                 <br>

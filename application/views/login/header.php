@@ -7,4 +7,4 @@
 <link href="<?= base_url('assets/login'); ?>/css/style.css" rel="stylesheet">
 <link href="<?= base_url('assets/login'); ?>/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
 
-<link rel="shortcut icon" type="image/jpg" href="<?= base_url('assets/resources'); ?>/wisudawan.jpg">
+<link rel="shortcut icon" type="image/png" href="<?= base_url('assets/resources'); ?>/wisudawan.png">

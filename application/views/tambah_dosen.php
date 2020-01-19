@@ -72,7 +72,7 @@
                                         <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                                         <input type="password" name="pw2" class="form-control" placeholder="Masukkan ulang kata sandi disini...">
                                     </div>
-                                    <button type="submit" onclick="" class="btn btn-success btn-md"><i class="fa fa-save fa-fw"></i> Simpan</button>
+                                    <input type="submit" name="simpan" onclick="" class="btn btn-success btn-md" value="Simpan"/>
                                     <button type="reset" onclick="" class="btn btn-danger btn-md"><i class="fa fa-refresh fa-fw"></i> Reset</button>
                                 </form>
                             </div>
