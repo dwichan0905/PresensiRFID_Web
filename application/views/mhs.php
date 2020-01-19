@@ -81,7 +81,7 @@
                                                 <td><?= $u->card_id ?></td>
                                                 <td><?= $u->cnt ?> kali</td>
                                                 <td>
-                                                    <button type="button" class="btn" title="Ubah mahasiswa <?= $u->nama ?>" onclick=""><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></button>
+                                                    <a class="btn" href="<?= base_url()?>mahasiswa/modify/<?= $u->nim ?>.me" title="Ubah mahasiswa <?= $u->nama ?>" onclick=""><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></a>
                                                     <button type="button" class="btn" title="Hapus mahasiswa <?= $u->nama ?>" onclick="delmhs(`<?= base_url(); ?>`,'<?= $u->nim ?>',`<?= $u->nama ?>`)"><img src="<?= base_url()?>assets/resources/delete.png" height="30"/></button>
                                                 </td>
                                             </tr>

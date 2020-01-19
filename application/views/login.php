@@ -18,7 +18,9 @@
 					  	<div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
 							<div class="card-body text-center">
 								<div>
-									<img class="img-responsive" src="<?=base_url()?>assets/resources/mahasiswa.png" height="300px"/>
+									<img class="img-responsive" src="<?=base_url()?>assets/resources/mahasiswa.png" height="200px"/>
+									<br>
+									<p><br><br>Copyright &copy; 2020. Created and Developed by Informatika 2018 A. All Rights Reserved.</p>
 								</div>
 							</div>
 						</div>

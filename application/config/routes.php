@@ -59,6 +59,7 @@ $route['devs/presensi.json'] = 'api/json/presensi';
 $route['devs/tambah_kartu.json'] = 'api/json/add_card';
 
 // Pages
+$route['about.me'] = 'coreui/about';
 $route['users/modify.me'] = 'coreui/user_mod';
 $route['logout.me'] = 'coreui/logout';
 
@@ -68,6 +69,7 @@ $route['dosen/modify/(:any).me'] = 'coreui/edit_dosen/$1';
 
 $route['mahasiswa.me'] = 'coreui/mahasiswa';
 $route['mahasiswa/add_new.me'] = 'coreui/tambah_mhs';
+$route['mahasiswa/modify/(:any).me'] = 'coreui/edit_mhs/$1';
 $route['mahasiswa/rfcards/get_rfcards.me'] = 'coreui/rfcards';
 
 $route['activity/today.me'] = 'coreui/today';

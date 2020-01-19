@@ -24,6 +24,9 @@
                     <li <?= ($page == 'dev' ? "class=\"active\"" : "");?>>
                         <a href="<?= base_url(''); ?>devices.me"><i class="fa fa-fw fa-hdd-o"></i> Perangkat</a>
                     </li>
+                    <li <?= ($page == 'about' ? "class=\"active\"" : "");?>>
+                        <a href="<?= base_url(''); ?>about.me"><i class="fa fa-fw fa-info"></i> Tentang</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

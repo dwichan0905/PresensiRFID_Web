@@ -389,6 +389,20 @@ class Coreui extends CI_Controller {
 					} else {
 						$num_id2 = $this->db->select('*')->from('mahasiswa')->where('card_id', $card_id)->get();
 						if ($num_id2->num_rows() == 0) {
+							$num_mhs = $this->db->select('*')->from('mahasiswa')->where('nim', $nim)->get();
+							if ($num_mhs->num_rows() > 0) {
+								$data['app_name'] = $this->config->item('app_name');
+								$data['username'] = $this->session->userdata('username');
+								$data['error'] = true;
+								$data['errorOn'] = "nim"; // nim, nama, card, all
+								$data['errorText'] = "NIM tersebut sudah terdaftar dengan nama " . $num_mhs->nama . "!";
+								$data['nim'] = $nim;
+								$data['nama'] = $nama;
+								$data['card'] = $card_id;
+								$this->load->view('tambah_mahasiswa', $data);
+								return;
+							}
+
 							$num_id = $this->db->select('card_id')->from('rf_cards')->where('card_id', $card_id)->get()->num_rows();
 							if ($num_id > 0) {
 								$this->db->insert('mahasiswa', array(
@@ -426,6 +440,148 @@ class Coreui extends CI_Controller {
 						}
 					}
 				}
+			}
+		} else {
+			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function edit_mhs($nim)
+	{
+		$data['page'] = 'dev';
+		$postdata = $this->input->post('simpan');
+		
+		if ($this->session->userdata('username')) {
+			if ($nim != null) {
+				if (!$postdata) {
+					$search = $this->db->select('*')->from('mahasiswa')->where('nim', $nim)->get();
+					
+					if ($search->num_rows() > 0) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = false;
+						$data['errorOn'] = ""; // nim, nama, card, all
+						$data['errorText'] = "";
+						$data['nim'] = $search->row()->nim;
+						$data['nama'] = $search->row()->nama;
+						$data['card'] = $search->row()->card_id;
+		
+						$this->load->view('edit_mahasiswa', $data);
+					} else {
+						redirect(base_url() . 'mahasiswa.me','refresh');
+					}
+				} else {
+					$hnim = $this->input->post('hnim');
+					$hcard = $this->input->post('hcard');
+					$nim = $this->input->post('nim');
+					$nama = $this->input->post('nama');
+					$card_id = $this->input->post('card_id');
+					
+					if (($nim == null) && ($nama == null) && ($card_id == null)) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "all"; // nim, nama, card, all
+						$data['errorText'] = "Semua kolom wajib diisi!";
+						$this->load->view('edit_mahasiswa', $data);
+					} else {
+						if ($nim == null) {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "nim"; // nim, nama, card, all
+							$data['errorText'] = "Kolom NIM wajib diisi!";
+							//$data['nim'] = $nim;
+							$data['nama'] = $nama;
+							$data['card'] = $card_id;
+							$this->load->view('edit_mahasiswa', $data);
+						} else if ($nama == null) {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "nama"; // nim, nama, card, all
+							$data['errorText'] = "Kolom Nama Mahasiswa wajib diisi!";
+							$data['nim'] = $nim;
+							//$data['nama'] = $nama;
+							$data['card'] = $card_id;
+							$this->load->view('edit_mahasiswa', $data);
+						} else if ($card_id == null) {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "card"; // nim, nama, card, all
+							$data['errorText'] = "Kolom Card ID wajib diisi!";
+							$data['nim'] = $nim;
+							$data['nama'] = $nama;
+							//$data['card'] = $card_id;
+							$this->load->view('edit_mahasiswa', $data);
+						} else {
+							$num_mhs = $this->db->select('*')->from('mahasiswa')->where('nim', $nim)->get();
+							if (($num_mhs->num_rows() > 0) && ($nim != $hnim)) {
+								$data['app_name'] = $this->config->item('app_name');
+								$data['username'] = $this->session->userdata('username');
+								$data['error'] = true;
+								$data['errorOn'] = "nim"; // nim, nama, card, all
+								$data['errorText'] = "NIM tersebut sudah terdaftar dengan nama " . $num_mhs->row()->nama . "!";
+								$data['nim'] = $nim;
+								$data['nama'] = $nama;
+								$data['card'] = $card_id;
+								$this->load->view('edit_mahasiswa', $data);
+								return;
+							}
+
+							if ($card_id == $hcard) {
+								$this->db->update('mahasiswa', array(
+									'nim' => $nim,
+									'nama' => $nama
+								), array('nim' => $hnim));
+								$this->session->set_tempdata('messages', "Berhasil mengubah data mahasiswa!", 5);
+								
+								redirect(base_url() . 'mahasiswa.me','refresh');
+							} else {
+								$num_id2 = $this->db->select('*')->from('mahasiswa')->where('card_id', $card_id)->get();
+								if ($num_id2->num_rows() == 0) {
+									$num_id = $this->db->select('card_id')->from('rf_cards')->where('card_id', $card_id)->get()->num_rows();
+									if ($num_id > 0) {
+										$this->db->insert('mahasiswa', array(
+											'nim' => $nim,
+											'nama' => $nama,
+											'card_id' => $card_id
+										));
+										
+										$this->db->delete('rf_cards', array('card_id' => $card_id));
+										
+										$this->session->set_tempdata('messages', "Berhasil menambahkan mahasiswa baru: " . $nama . "!", 5);
+									
+										redirect(base_url() . 'mahasiswa.me','refresh');
+									} else {
+										$data['app_name'] = $this->config->item('app_name');
+										$data['username'] = $this->session->userdata('username');
+										$data['error'] = true;
+										$data['errorOn'] = "card"; // nim, nama, card, all
+										$data['errorText'] = "Card ID belum terdaftar! Silakan daftarkan via perangkat yang sudah terdaftar!";
+										$data['nim'] = $nim;
+										$data['nama'] = $nama;
+										$data['card'] = $card_id;
+										$this->load->view('edit_mahasiswa', $data);
+									}
+								} else {
+									$data['app_name'] = $this->config->item('app_name');
+									$data['username'] = $this->session->userdata('username');
+									$data['error'] = true;
+									$data['errorOn'] = "card"; // nim, nama, card, all
+									$data['errorText'] = "Card ID tersebut sudah didaftarkan dengan mahasiswa bernama " . $num_id2->row()->nama . " (" . $num_id2->row()->nim . ")!";
+									$data['nim'] = $nim;
+									$data['nama'] = $nama;
+									$data['card'] = $card_id;
+									$this->load->view('edit_mahasiswa', $data);
+								}
+							}
+						}
+					}
+				}
+			} else {
+				redirect(base_url() . 'mahasiswa.me','refresh');
 			}
 		} else {
 			redirect(base_url(),'refresh');
@@ -702,5 +858,15 @@ class Coreui extends CI_Controller {
 		} else {
 			redirect(base_url(),'refresh');
 		}
+	}
+
+	public function about()
+	{
+		$data['page'] = 'about';
+		$data['app_name'] = $this->config->item('app_name');
+		$data['app_ver'] = $this->config->item('app_ver');
+		$data['username'] = $this->session->userdata('username');
+
+		$this->load->view('about', $data);
 	}
 }
