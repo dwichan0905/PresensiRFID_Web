@@ -66,7 +66,7 @@
                                     <table class="table table-hover table-striped dataTables">
                                         <thead>
                                             <tr>
-                                                <th width="50">NIM</th>
+                                                <th width="50">NIDN/NIK</th>
                                                 <th>Nama</th>
                                                 <th width="150">Aksi</th>
                                             </tr>
@@ -77,7 +77,7 @@
                                                 <td><?= $u->nidn ?></td>
                                                 <td><?= $u->nama ?></td>
                                                 <td>
-                                                    <button type="button" class="btn" title="Ubah mahasiswa <?= $u->nama ?>" onclick=""><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></button>
+                                                    <a class="btn" title="Ubah mahasiswa <?= $u->nama ?>" href="<?=base_url()?>dosen/modify/<?=$u->nidn?>.me"><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></a>
                                                     <button type="button" class="btn" title="Hapus mahasiswa <?= $u->nama ?>" onclick="deldsn(`<?= base_url(); ?>`,'<?= $u->nidn ?>',`<?= $u->nama ?>`)"><img src="<?= base_url()?>assets/resources/delete.png" height="30"/></button>
                                                 </td>
                                             </tr>

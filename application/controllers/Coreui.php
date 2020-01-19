@@ -258,6 +258,77 @@ class Coreui extends CI_Controller {
 		}
 	}
 
+	public function edit_dosen($nidn)
+	{
+		$data['page'] = 'dosen';
+		$postdata = $this->input->post('simpan');
+
+		if ($nidn != null) {
+			if (!$postdata) {
+				$search = $this->db->select('*')->from('dosen')->where('nidn', $nidn)->get();
+				if (($search->num_rows() > 0) && ($nidn != $this->session->userdata('nidn'))) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = false;
+					$data['errorOn'] = ""; // id, nama, all, req
+					$data['errorText'] = "";
+					$data['id'] = $nidn;
+					$data['nama'] = $search->row()->nama;
+
+					$this->load->view('edit_dosen', $data);
+				} else {
+					redirect(base_url() . 'dosen.me','refresh');
+				}
+			} else {
+				$h = $this->input->post('hnidn');
+				$nidn = $this->input->post('nidn');
+				$nama = $this->input->post('nama');
+				if (($nidn == null) || ($nama == null)){
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "req"; // id, nama, all, req
+					$data['errorText'] = "NIDN/NIK dan Nama Lengkap tidak boleh ada yang dikosongkan!";
+					$data['id'] = $this->session->userdata('nidn');
+					$data['nama'] = $this->session->userdata('username');
+
+					$this->load->view('edit_dosen', $data);
+				} else {
+					$geta = $this->db->select('*')->from('dosen')->where('nidn', $nidn)->get();
+					if (($geta->num_rows() > 0) && ($nidn != $h)) {
+						$data['app_name'] = $this->config->item('app_name');
+						$data['username'] = $this->session->userdata('username');
+						$data['error'] = true;
+						$data['errorOn'] = "id"; // id, nama, all, req
+						$data['errorText'] = "NIDN/NIK tersebut sudah didaftarkan dengan nama ". $geta->row()->nama ."!";
+						$data['id'] = $nidn;
+						$data['nama'] = $nama;
+
+						$this->load->view('edit_dosen', $data);
+						return;
+					} else {
+						if ($nidn != $h) {
+							$this->db->update('dosen', array(
+								'nidn' => $nidn,
+								'nama' => $nama
+							), array('nidn' => $h));
+						} else {
+							$this->db->update('dosen', array(
+								'nama' => $nama
+							), array('nidn' => $h));
+						}
+
+						$this->session->set_tempdata('messages', "Berhasil mengubah data dosen!", 5);
+						
+						redirect(base_url() . 'dosen.me','refresh');
+					}
+				}
+			}
+		} else {
+			redirect(base_url() . 'dosen.me','refresh');
+		}
+	}
+
 	public function tambah_mhs()
 	{
 		$data['page'] = 'mhs';
@@ -428,6 +499,158 @@ class Coreui extends CI_Controller {
 							
 							redirect(base_url() . 'devices.me','refresh');
 							
+						}
+					}
+				}
+			}
+		} else {
+			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function user_mod()
+	{
+		$data['page'] = 'edlog';
+		$postdata = $this->input->post('simpan');
+		
+		if ($this->session->userdata('username')) {
+			if (!$postdata) {
+				$data['app_name'] = $this->config->item('app_name');
+				$data['username'] = $this->session->userdata('username');
+				$data['error'] = false;
+				$data['errorOn'] = ""; // id, nama, all, req
+				$data['errorText'] = "";
+				$data['id'] = $this->session->userdata('nidn');
+				$data['nama'] = $this->session->userdata('username');
+
+				$this->load->view('edit_dosen_l', $data);
+			} else {
+				$nidn = $this->input->post('nidn');
+				$nama = $this->input->post('nama');
+				$pass1 = $this->input->post('pw');
+				$pass2 = $this->input->post('pw2');
+				if (($nidn == null) || ($nama == null)){
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "req"; // id, nama, all, req
+					$data['errorText'] = "NIDN/NIK dan Nama Lengkap tidak boleh ada yang dikosongkan!";
+					$data['id'] = $this->session->userdata('nidn');
+					$data['nama'] = $this->session->userdata('username');
+
+					$this->load->view('edit_dosen_l', $data);
+				} else {
+					if (($pass1 != null) || ($pass2 != null)) {
+						if ($pass1 != $pass2) {
+							$data['app_name'] = $this->config->item('app_name');
+							$data['username'] = $this->session->userdata('username');
+							$data['error'] = true;
+							$data['errorOn'] = "pw"; // id, nama, all, req
+							$data['errorText'] = "Kata Sandi tidak sama!";
+							$data['id'] = $this->session->userdata('nidn');
+							$data['nama'] = $this->session->userdata('username');
+
+							$this->load->view('edit_dosen_l', $data);
+						} else {
+							if ($nidn != $this->session->userdata('nidn')) {
+								$geta = $this->db->select('*')->from('dosen')->where('nidn', $nidn)->get();
+								if ($geta->num_rows() > 0) {
+									$data['app_name'] = $this->config->item('app_name');
+									$data['username'] = $this->session->userdata('username');
+									$data['error'] = true;
+									$data['errorOn'] = "id"; // id, nama, all, req
+									$data['errorText'] = "NIDN/NIK tersebut sudah didaftarkan dengan nama ". $geta->row()->nama ."!";
+									$data['id'] = $this->session->userdata('nidn');
+									$data['nama'] = $this->session->userdata('username');
+
+									$this->load->view('edit_dosen_l', $data);
+									return;
+								} else {
+									$this->db->update('dosen', array(
+										'nidn' => $nidn,
+										'nama' => $nama,
+										'password' => base64_encode($pass1)
+									), array('nidn' => $this->session->userdata('nidn')));
+									//$this->session->sess_destroy();
+							
+									$array = array(
+										'nidn' => $nidn,
+										'username' => $nama
+									);
+									
+									$this->session->set_userdata( $array );
+
+									$this->session->set_tempdata('messages', "Berhasil mengubah pengaturan pengguna serta merubah kata sandinya!", 5);
+									
+									redirect(base_url() . 'users/modify.me','refresh');
+								}
+							} else {
+								$this->db->update('dosen', array(
+									'nama' => $nama,
+									'password' => base64_encode($pass1)
+								), array('nidn' => $this->session->userdata('nidn')));
+								//$this->session->sess_destroy();
+							
+								$array = array(
+									'nidn' => $nidn,
+									'username' => $nama
+								);
+								
+								$this->session->set_userdata( $array );
+
+								$this->session->set_tempdata('messages', "Berhasil mengubah pengaturan pengguna serta merubah kata sandinya!", 5);
+								
+								redirect(base_url() . 'users/modify.me','refresh');
+							}
+						}
+					} else {
+						if ($nidn != $this->session->userdata('nidn')) {
+							$geta = $this->db->select('*')->from('dosen')->where('nidn', $nidn)->get();
+							if ($geta->num_rows() > 0) {
+								$data['app_name'] = $this->config->item('app_name');
+								$data['username'] = $this->session->userdata('username');
+								$data['error'] = true;
+								$data['errorOn'] = "id"; // id, nama, all, req
+								$data['errorText'] = "NIDN/NIK tersebut sudah didaftarkan dengan nama ". $geta->row()->nama ."!";
+								$data['id'] = $this->session->userdata('nidn');
+								$data['nama'] = $this->session->userdata('username');
+
+								$this->load->view('edit_dosen_l', $data);
+								return;
+							} else {
+								$this->db->update('dosen', array(
+									'nidn' => $nidn,
+									'nama' => $nama
+								), array('nidn' => $this->session->userdata('nidn')));
+								//$this->session->sess_destroy();
+						
+								$array = array(
+									'nidn' => $nidn,
+									'username' => $nama
+								);
+								
+								$this->session->set_userdata( $array );
+
+								$this->session->set_tempdata('messages', "Berhasil mengubah pengaturan pengguna serta merubah kata sandinya!", 5);
+								
+								redirect(base_url() . 'users/modify.me','refresh');
+							}
+						} else {
+							$this->db->update('dosen', array(
+								'nama' => $nama
+							), array('nidn' => $this->session->userdata('nidn')));
+							//$this->session->sess_destroy();
+						
+							$array = array(
+								'nidn' => $nidn,
+								'username' => $nama
+							);
+							
+							$this->session->set_userdata( $array );
+
+							$this->session->set_tempdata('messages', "Berhasil mengubah pengaturan pengguna serta merubah kata sandinya!", 5);
+							
+							redirect(base_url() . 'users/modify.me','refresh');
 						}
 					}
 				}

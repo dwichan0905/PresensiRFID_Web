@@ -59,10 +59,12 @@ $route['devs/presensi.json'] = 'api/json/presensi';
 $route['devs/tambah_kartu.json'] = 'api/json/add_card';
 
 // Pages
+$route['users/modify.me'] = 'coreui/user_mod';
 $route['logout.me'] = 'coreui/logout';
 
 $route['dosen.me'] = 'coreui/dosen';
 $route['dosen/add_new.me'] = 'coreui/tambah_dosen';
+$route['dosen/modify/(:any).me'] = 'coreui/edit_dosen/$1';
 
 $route['mahasiswa.me'] = 'coreui/mahasiswa';
 $route['mahasiswa/add_new.me'] = 'coreui/tambah_mhs';

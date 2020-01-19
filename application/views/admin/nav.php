@@ -14,7 +14,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= $username ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Pengaturan</a>
+                            <a href="<?= base_url('users/modify.me'); ?>"><i class="fa fa-fw fa-gear"></i> Pengaturan</a>
                         </li>
                         <li class="divider"></li>
                         <li>
