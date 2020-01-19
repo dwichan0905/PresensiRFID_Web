@@ -75,4 +75,5 @@ $route['activity/all.me'] = 'coreui/all';
 
 $route['devices.me'] = 'coreui/devices';
 $route['devices/add_new.me'] = 'coreui/tambah_perangkat';
+$route['devices/modify/(:any).me'] = 'coreui/edit_devices/$1';
 

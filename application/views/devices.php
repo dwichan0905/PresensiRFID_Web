@@ -50,7 +50,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" onclick="location.href = '<?= base_url('') ?>devices/add_new.me'" class="btn btn-success btn-md">Tambah Perangkat Baru</button>
+                        <button type="button" onclick="location.href = '<?= base_url('') ?>devices/add_new.me'" class="btn btn-default btn-md"><img src="<?= base_url()?>assets/resources/plus.png" height="15"/> Tambah Perangkat Baru</button>
                     </div>
                 </div>
                 <br>
@@ -78,8 +78,8 @@
                                                 <td><?= $u->name ?></td>
                                                 <td><?= date("d/m/Y H:i:s", strtotime($u->timestamp)); ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-info btn-sm" onclick="">Edit</button>
-                                                    <button type="button" class="btn btn-danger btn-sm" title="Hapus perangkat <?= $u->name ?>" onclick="deldev('<?= base_url() ?>','<?= $u->id ?>',`<?= $u->name ?>`)">Delete</button>
+                                                <a class="btn" title="Ubah perangkat <?= $u->name ?>" href="<?=base_url()?>devices/modify/<?=$u->id?>.me"><img src="<?= base_url()?>assets/resources/pencil.png" height="30"/></a>
+                                                    <button type="button" class="btn" title="Hapus perangkat <?= $u->name ?>" onclick="deldev('<?= base_url() ?>','<?= $u->id ?>',`<?= $u->name ?>`)"><img src="<?= base_url()?>assets/resources/delete.png" height="30"/></button>
                                                 </td>
                                             </tr>
                                         <?php } ?>

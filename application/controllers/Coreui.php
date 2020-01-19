@@ -263,7 +263,7 @@ class Coreui extends CI_Controller {
 		$data['page'] = 'dosen';
 		$postdata = $this->input->post('simpan');
 
-		if ($nidn != null) {
+		if (($nidn != null) && $this->session->userdata('nidn')) {
 			if (!$postdata) {
 				$search = $this->db->select('*')->from('dosen')->where('nidn', $nidn)->get();
 				if (($search->num_rows() > 0) && ($nidn != $this->session->userdata('nidn'))) {
@@ -498,13 +498,57 @@ class Coreui extends CI_Controller {
 							$this->session->set_tempdata('messages', "Berhasil menambahkan perangkat baru: " . $nama . "!", 5);
 							
 							redirect(base_url() . 'devices.me','refresh');
-							
 						}
 					}
 				}
 			}
 		} else {
 			redirect(base_url(),'refresh');
+		}
+	}
+
+	public function edit_devices($id)
+	{
+		$data['page'] = 'dev';
+		$postdata = $this->input->post('simpan');
+		
+		if (($id != null) && ($this->session->userdata('username'))) {
+			if (!$postdata) {
+				$search = $this->db->select('*')->from('devices')->where('id', $id)->get();
+				if ($search->num_rows() > 0) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = false;
+					$data['errorOn'] = ""; // id, nama, all, req
+					$data['errorText'] = "";
+					$data['id'] = $search->row()->id;
+					$data['nama'] = $search->row()->name;
+
+					$this->load->view('edit_perangkat', $data);
+				} else {
+					redirect(base_url() . 'devices.me','refresh');
+				}
+			} else {
+				$nama = $this->input->post('nama');
+				
+				if ($nama == null) {
+					$data['app_name'] = $this->config->item('app_name');
+					$data['username'] = $this->session->userdata('username');
+					$data['error'] = true;
+					$data['errorOn'] = "nama"; // id, nama, all, req
+					$data['errorText'] = "Nama wajib diisi!";
+					$data['id'] = $id;
+					$data['nama'] = $nama;
+
+					$this->load->view('edit_perangkat', $data);
+				} else {
+					$this->db->update('devices', array('name' => $nama), array('id' => $id));
+					$this->session->set_tempdata('messages', "Berhasil mengubah data perangkat!", 5);
+					redirect(base_url() . 'devices.me','refresh');
+				}
+			}
+		} else {
+			redirect(base_url() . 'devices.me','refresh');
 		}
 	}
 
