@@ -33,3 +33,7 @@ Result:
 * 401: Device ID belum terdaftar atau kosong
 * 403: Device ID belum terdaftar
 * 404: Card belum terdaftar
+
+Repo lainnya:
+* (Versi Desktop) [https://github.com/dwichan0905/PresensiRFID_CSharp]
+* (Versi Arduino) [https://github.com/dwichan0905/PresensiRFID_Duino]
