@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['devs'] = 'api/json';
 $route['devs/presensi.json'] = 'api/json/presensi';
 $route['devs/tambah_kartu.json'] = 'api/json/add_card';
+$route['devs/cek_dev.json'] = 'api/json/check';
 
 // Pages
 $route['about.me'] = 'coreui/about';

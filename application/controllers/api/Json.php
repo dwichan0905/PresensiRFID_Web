@@ -112,6 +112,31 @@ class Json extends CI_Controller {
         echo json_encode($data);
     }
 
+    public function check()
+    {
+        $device = $this->input->get('device_id');
+        if ($device !== null) {
+            if ($this->getDevice($device)) {
+                $get = $this->db->select('*')->from('devices')->where('id', $device)->get()->row();
+                $data = array(
+                    'code' => '200',
+                    'result' => $get->name
+                );
+            } else {
+                $data = array(
+                    'code' => '404',
+                    'result' => 'Device Not Found!'
+                );
+            }
+        } else {
+            $data = array(
+                'code' => '401',
+                'result' => 'Device ID Required!'
+            );
+        }
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file Json.php */
