@@ -34,6 +34,11 @@ class Json extends CI_Controller {
                             'code' => '200',
                             'result' => $dm->nim . ";" . $dm->nama
                         );
+                        $this->db->insert('logs', array(
+                            'card_id' => $card_id,
+                            'nim' => $dm->nim
+                        ));
+                        
                     } else {
                         $data = array(
                             'code' => '404',

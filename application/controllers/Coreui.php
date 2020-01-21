@@ -40,7 +40,7 @@ class Coreui extends CI_Controller {
 													->join('mahasiswa b', 'a.card_id = b.card_id', 'inner')
 													->order_by('a.timestamp', 'desc')
 													->limit(10)->get()->result();
-				$data['today_activity'] = $this->db->query("SELECT * FROM logs WHERE timestamp BETWEEN '$dt 00:00:00' AND NOW() LIMIT 10")->result();
+				$data['today_activity'] = $this->db->query("SELECT a.nim, b.nama, a.timestamp FROM logs a INNER JOIN mahasiswa b ON a.card_id = b.card_id WHERE a.timestamp BETWEEN '$dt 00:00:00' AND NOW() ORDER BY a.timestamp DESC LIMIT 10")->result();
 				$data['mhs_count'] = $this->db->select('COUNT(*) AS mhs_cnt')->from('mahasiswa')->get()->row();
 				$data['dev_count'] = $this->db->select('COUNT(*) AS dev_cnt')->from('devices')->get()->row();
 				
@@ -136,7 +136,7 @@ class Coreui extends CI_Controller {
 		if ($this->session->userdata('username')) {
 			$data['app_name'] = $this->config->item('app_name');
 			$data['username'] = $this->session->userdata('username');
-			$data['list_log'] = $this->db->query("SELECT * FROM logs WHERE timestamp BETWEEN '$dt 00:00:00' AND NOW() ORDER BY timestamp DESC")->result();
+			$data['list_log'] = $this->db->query("SELECT a.nim, b.nama, a.timestamp FROM logs a INNER JOIN mahasiswa b ON a.card_id = b.card_id WHERE a.timestamp BETWEEN '$dt 00:00:00' AND NOW() ORDER BY a.timestamp DESC")->result();
 
 			$this->load->view('today', $data);
 		} else {
