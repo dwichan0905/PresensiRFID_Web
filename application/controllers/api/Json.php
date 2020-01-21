@@ -32,11 +32,7 @@ class Json extends CI_Controller {
                         $dm = $get->row();
                         $data = array(
                             'code' => '200',
-                            'result' => array(
-                                'nim' => $dm->nim,
-                                'nama' => $dm->nama,
-                                'card_id' => $card_id
-                            )
+                            'result' => $dm->nim . ";" . $dm->nama
                         );
                     } else {
                         $data = array(
@@ -82,13 +78,13 @@ class Json extends CI_Controller {
                         ));
                         
                         $data = array(
-                            'code' => '1',
-                            'result' => $card_id . ' added successfully'
+                            'code' => '2',
+                            'result' => $card_id
                         );
                     } else {
                         $data = array(
-                            'code' => '0',
-                            'result' => $card_id . ' is already on database.'
+                            'code' => '1',
+                            'result' => $card_id
                         );
                     }
                 } else {
