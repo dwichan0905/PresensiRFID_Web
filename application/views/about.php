@@ -120,12 +120,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Arduino</th>
-                                                    <td>
-                                                        <ol>
-                                                            <li>Ilham Fatkhul Qorib (18.11.0170)</li>
-                                                            <li>Safangat Tirto Jaya Sakti (18.11.0278)</li>
-                                                        </ol>
-                                                    </td>
+                                                    <td>Dwi Candra Permana (18.11.0004)</td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -145,6 +140,8 @@
                                             <ol>
                                                 <li>Titin Sulistiowati (18.11.0005)</li>
                                                 <li>Diyah Primasari (18.11.0289)</li>
+                                                <li>Safangat Tirto Jaya Sakti (18.11.0278)</li>
+                                                <li>Paras Taufani (18.11.0028)</li>
                                             </ol>
                                         </td>
                                     </tr>
@@ -152,6 +149,7 @@
                                         <th>Peralatan dan Perlengkapan</th>
                                         <td>
                                             <ol>
+                                                <li>Ilham Fatkhul Qorib (18.11.0170)</li>
                                                 <li>Dicky Kusuma Rubianto (18.11.0033)</li>
                                                 <li>Adhitya Wahyu Ridwanto (18.11.0027)</li>
                                             </ol>
